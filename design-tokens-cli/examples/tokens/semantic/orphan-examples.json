@@ -1,0 +1,32 @@
+{
+  "orphan": {
+    "example1": {
+      "missingReference": {
+        "$type": "color",
+        "$value": "{color.purple.500}",
+        "$description": "This references a non-existent token"
+      }
+    },
+    "example2": {
+      "typoReference": {
+        "$type": "dimension",
+        "$value": "{spacng.md}",
+        "$description": "This has a typo in the reference"
+      }
+    },
+    "example3": {
+      "invalidReference": {
+        "$type": "color",
+        "$value": "{invalid.token.path}",
+        "$description": "This references an invalid path"
+      }
+    },
+    "validSemanticToken": {
+      "correctReference": {
+        "$type": "color",
+        "$value": "{color.blue.300}",
+        "$description": "This is a valid semantic token for comparison"
+      }
+    }
+  }
+}

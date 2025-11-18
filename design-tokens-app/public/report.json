@@ -1,0 +1,631 @@
+{
+  "summary": {
+    "totalTokens": 63,
+    "globalTokens": 33,
+    "semanticTokens": 30,
+    "orphanTokens": 3
+  },
+  "statistics": {
+    "avgReferencesPerToken": 0.48,
+    "maxDepth": 1,
+    "circularReferences": []
+  },
+  "orphanTokens": [
+    {
+      "path": "orphan.example1.missingReference",
+      "value": "{color.purple.500}",
+      "missingReference": "color.purple.500",
+      "description": "This references a non-existent token"
+    },
+    {
+      "path": "orphan.example2.typoReference",
+      "value": "{spacng.md}",
+      "missingReference": "spacng.md",
+      "description": "This has a typo in the reference"
+    },
+    {
+      "path": "orphan.example3.invalidReference",
+      "value": "{invalid.token.path}",
+      "missingReference": "invalid.token.path",
+      "description": "This references an invalid path"
+    }
+  ],
+  "graph": {
+    "nodeCount": 63,
+    "edgeCount": 27,
+    "nodesByType": {
+      "global": 33,
+      "semantic": 27,
+      "orphan": 3
+    }
+  },
+  "tokens": [
+    {
+      "path": "color.blue.100",
+      "value": "#e3f2fd",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": []
+    },
+    {
+      "path": "color.blue.300",
+      "value": "#64b5f6",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "orphan.validSemanticToken.correctReference"
+      ]
+    },
+    {
+      "path": "color.blue.500",
+      "value": "#2196f3",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "button.primary.background"
+      ]
+    },
+    {
+      "path": "color.blue.700",
+      "value": "#1976d2",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "button.primary.backgroundHover"
+      ]
+    },
+    {
+      "path": "color.blue.900",
+      "value": "#0d47a1",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": []
+    },
+    {
+      "path": "color.gray.100",
+      "value": "#f5f5f5",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": []
+    },
+    {
+      "path": "color.gray.300",
+      "value": "#e0e0e0",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "button.secondary.background"
+      ]
+    },
+    {
+      "path": "color.gray.500",
+      "value": "#9e9e9e",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "button.secondary.backgroundHover",
+        "text.body.small.color"
+      ]
+    },
+    {
+      "path": "color.gray.700",
+      "value": "#616161",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "text.heading.h3.color",
+        "text.body.default.color"
+      ]
+    },
+    {
+      "path": "color.gray.900",
+      "value": "#212121",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "button.secondary.text",
+        "text.heading.h1.color",
+        "text.heading.h2.color"
+      ]
+    },
+    {
+      "path": "color.red.100",
+      "value": "#ffebee",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": []
+    },
+    {
+      "path": "color.red.500",
+      "value": "#f44336",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "button.danger.background"
+      ]
+    },
+    {
+      "path": "color.red.700",
+      "value": "#d32f2f",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "button.danger.backgroundHover"
+      ]
+    },
+    {
+      "path": "color.green.500",
+      "value": "#4caf50",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": []
+    },
+    {
+      "path": "color.green.700",
+      "value": "#388e3c",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": []
+    },
+    {
+      "path": "color.white",
+      "value": "#ffffff",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "button.primary.text",
+        "button.danger.text"
+      ]
+    },
+    {
+      "path": "color.black",
+      "value": "#000000",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": []
+    },
+    {
+      "path": "spacing.xs",
+      "value": "4px",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": []
+    },
+    {
+      "path": "spacing.sm",
+      "value": "8px",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": []
+    },
+    {
+      "path": "spacing.md",
+      "value": "16px",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "button.primary.padding",
+        "button.secondary.padding"
+      ]
+    },
+    {
+      "path": "spacing.lg",
+      "value": "24px",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": []
+    },
+    {
+      "path": "spacing.xl",
+      "value": "32px",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": []
+    },
+    {
+      "path": "spacing.2xl",
+      "value": "48px",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": []
+    },
+    {
+      "path": "fontSize.sm",
+      "value": "12px",
+      "type": "dimension",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "text.body.small.fontSize"
+      ]
+    },
+    {
+      "path": "fontSize.base",
+      "value": "14px",
+      "type": "dimension",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "button.primary.fontSize",
+        "text.body.default.fontSize"
+      ]
+    },
+    {
+      "path": "fontSize.lg",
+      "value": "16px",
+      "type": "dimension",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": []
+    },
+    {
+      "path": "fontSize.xl",
+      "value": "20px",
+      "type": "dimension",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "text.heading.h3.fontSize"
+      ]
+    },
+    {
+      "path": "fontSize.2xl",
+      "value": "24px",
+      "type": "dimension",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "text.heading.h2.fontSize"
+      ]
+    },
+    {
+      "path": "fontSize.3xl",
+      "value": "32px",
+      "type": "dimension",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "text.heading.h1.fontSize"
+      ]
+    },
+    {
+      "path": "fontWeight.regular",
+      "value": "400",
+      "type": "number",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "text.body.default.fontWeight"
+      ]
+    },
+    {
+      "path": "fontWeight.medium",
+      "value": "500",
+      "type": "number",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": []
+    },
+    {
+      "path": "fontWeight.semibold",
+      "value": "600",
+      "type": "number",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "text.heading.h2.fontWeight",
+        "text.heading.h3.fontWeight"
+      ]
+    },
+    {
+      "path": "fontWeight.bold",
+      "value": "700",
+      "type": "number",
+      "isGlobal": true,
+      "references": [],
+      "referencedBy": [
+        "text.heading.h1.fontWeight"
+      ]
+    },
+    {
+      "path": "button.primary.background",
+      "value": "{color.blue.500}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.blue.500"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "button.primary.backgroundHover",
+      "value": "{color.blue.700}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.blue.700"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "button.primary.text",
+      "value": "{color.white}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.white"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "button.primary.padding",
+      "value": "{spacing.md}",
+      "type": "dimension",
+      "isGlobal": false,
+      "references": [
+        "spacing.md"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "button.primary.fontSize",
+      "value": "{fontSize.base}",
+      "type": "dimension",
+      "isGlobal": false,
+      "references": [
+        "fontSize.base"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "button.secondary.background",
+      "value": "{color.gray.300}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.gray.300"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "button.secondary.backgroundHover",
+      "value": "{color.gray.500}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.gray.500"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "button.secondary.text",
+      "value": "{color.gray.900}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.gray.900"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "button.secondary.padding",
+      "value": "{spacing.md}",
+      "type": "dimension",
+      "isGlobal": false,
+      "references": [
+        "spacing.md"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "button.danger.background",
+      "value": "{color.red.500}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.red.500"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "button.danger.backgroundHover",
+      "value": "{color.red.700}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.red.700"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "button.danger.text",
+      "value": "{color.white}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.white"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "orphan.example1.missingReference",
+      "value": "{color.purple.500}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.purple.500"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "orphan.example2.typoReference",
+      "value": "{spacng.md}",
+      "type": "dimension",
+      "isGlobal": false,
+      "references": [
+        "spacng.md"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "orphan.example3.invalidReference",
+      "value": "{invalid.token.path}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "invalid.token.path"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "orphan.validSemanticToken.correctReference",
+      "value": "{color.blue.300}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.blue.300"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "text.heading.h1.fontSize",
+      "value": "{fontSize.3xl}",
+      "type": "dimension",
+      "isGlobal": false,
+      "references": [
+        "fontSize.3xl"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "text.heading.h1.fontWeight",
+      "value": "{fontWeight.bold}",
+      "type": "number",
+      "isGlobal": false,
+      "references": [
+        "fontWeight.bold"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "text.heading.h1.color",
+      "value": "{color.gray.900}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.gray.900"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "text.heading.h2.fontSize",
+      "value": "{fontSize.2xl}",
+      "type": "dimension",
+      "isGlobal": false,
+      "references": [
+        "fontSize.2xl"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "text.heading.h2.fontWeight",
+      "value": "{fontWeight.semibold}",
+      "type": "number",
+      "isGlobal": false,
+      "references": [
+        "fontWeight.semibold"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "text.heading.h2.color",
+      "value": "{color.gray.900}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.gray.900"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "text.heading.h3.fontSize",
+      "value": "{fontSize.xl}",
+      "type": "dimension",
+      "isGlobal": false,
+      "references": [
+        "fontSize.xl"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "text.heading.h3.fontWeight",
+      "value": "{fontWeight.semibold}",
+      "type": "number",
+      "isGlobal": false,
+      "references": [
+        "fontWeight.semibold"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "text.heading.h3.color",
+      "value": "{color.gray.700}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.gray.700"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "text.body.default.fontSize",
+      "value": "{fontSize.base}",
+      "type": "dimension",
+      "isGlobal": false,
+      "references": [
+        "fontSize.base"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "text.body.default.fontWeight",
+      "value": "{fontWeight.regular}",
+      "type": "number",
+      "isGlobal": false,
+      "references": [
+        "fontWeight.regular"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "text.body.default.color",
+      "value": "{color.gray.700}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.gray.700"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "text.body.small.fontSize",
+      "value": "{fontSize.sm}",
+      "type": "dimension",
+      "isGlobal": false,
+      "references": [
+        "fontSize.sm"
+      ],
+      "referencedBy": []
+    },
+    {
+      "path": "text.body.small.color",
+      "value": "{color.gray.500}",
+      "type": "color",
+      "isGlobal": false,
+      "references": [
+        "color.gray.500"
+      ],
+      "referencedBy": []
+    }
+  ]
+}

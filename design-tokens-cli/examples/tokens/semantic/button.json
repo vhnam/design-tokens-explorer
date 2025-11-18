@@ -1,0 +1,58 @@
+{
+  "button": {
+    "primary": {
+      "background": {
+        "$type": "color",
+        "$value": "{color.blue.500}"
+      },
+      "backgroundHover": {
+        "$type": "color",
+        "$value": "{color.blue.700}"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{color.white}"
+      },
+      "padding": {
+        "$type": "dimension",
+        "$value": "{spacing.md}"
+      },
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{fontSize.base}"
+      }
+    },
+    "secondary": {
+      "background": {
+        "$type": "color",
+        "$value": "{color.gray.300}"
+      },
+      "backgroundHover": {
+        "$type": "color",
+        "$value": "{color.gray.500}"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{color.gray.900}"
+      },
+      "padding": {
+        "$type": "dimension",
+        "$value": "{spacing.md}"
+      }
+    },
+    "danger": {
+      "background": {
+        "$type": "color",
+        "$value": "{color.red.500}"
+      },
+      "backgroundHover": {
+        "$type": "color",
+        "$value": "{color.red.700}"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{color.white}"
+      }
+    }
+  }
+}
