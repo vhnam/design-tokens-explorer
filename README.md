@@ -1,274 +1,310 @@
-# Design Tokens Explorer
+Welcome to your new TanStack app! 
 
-A powerful CLI tool to analyze and visualize Design Tokens relationships according to the DTCG 2025.10 standard.
+# Getting Started
 
-## Features
-
-- Parse Design Tokens from JSON files following DTCG 2025.10 specification
-- Build directed graph of token relationships
-- Identify Global (Foundation) vs Semantic tokens
-- Detect orphan tokens (semantic tokens with invalid references)
-- Find circular references
-- Generate multiple output formats:
-  - JSON reports
-  - Text reports
-  - Markdown reports
-  - Interactive HTML visualization (D3.js)
-  - D3.js compatible JSON
-  - DOT (Graphviz) format
-  - Mermaid diagrams
-- Both simple CLI commands and interactive mode
-
-## Installation
+To run this application:
 
 ```bash
-npm install
-npm run build
+pnpm install
+pnpm start
 ```
 
-Or for development:
+# Building For Production
+
+To build this application for production:
 
 ```bash
-npm install
+pnpm build
 ```
 
-## Usage
+## Testing
 
-### Quick Start
-
-Analyze the sample tokens:
+This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
 
 ```bash
-npm test
+pnpm test
 ```
 
-This will analyze the example tokens in `./examples/tokens` and generate outputs in `./output`.
+## Styling
 
-### CLI Commands
+This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
 
-#### Analyze tokens
+
+## Linting & Formatting
+
+
+This project uses [eslint](https://eslint.org/) and [prettier](https://prettier.io/) for linting and formatting. Eslint is configured using [tanstack/eslint-config](https://tanstack.com/config/latest/docs/eslint). The following scripts are available:
 
 ```bash
-# Basic usage
-npm run dev analyze
-
-# With options
-npm run dev analyze --input ./my-tokens --output ./my-output
-
-# Specify formats
-npm run dev analyze --format json html d3 dot mermaid
-
-# Print to console
-npm run dev analyze --console
-
-# Skip visualization
-npm run dev analyze --no-viz
+pnpm lint
+pnpm format
+pnpm check
 ```
 
-#### Interactive Mode
+
+## Shadcn
+
+Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
 
 ```bash
-npm run dev interactive
+pnpx shadcn@latest add button
 ```
 
-Follow the prompts to select input/output paths and desired formats.
 
-#### Get Token Information
+
+## Routing
+This project uses [TanStack Router](https://tanstack.com/router). The initial setup is a file based router. Which means that the routes are managed as files in `src/routes`.
+
+### Adding A Route
+
+To add a new route to your application just add another a new file in the `./src/routes` directory.
+
+TanStack will automatically generate the content of the route file for you.
+
+Now that you have two routes you can use a `Link` component to navigate between them.
+
+### Adding Links
+
+To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
+
+```tsx
+import { Link } from "@tanstack/react-router";
+```
+
+Then anywhere in your JSX you can use it like so:
+
+```tsx
+<Link to="/about">About</Link>
+```
+
+This will create a link that will navigate to the `/about` route.
+
+More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
+
+### Using A Layout
+
+In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you use the `<Outlet />` component.
+
+Here is an example layout that includes a header:
+
+```tsx
+import { Outlet, createRootRoute } from '@tanstack/react-router'
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+
+import { Link } from "@tanstack/react-router";
+
+export const Route = createRootRoute({
+  component: () => (
+    <>
+      <header>
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/about">About</Link>
+        </nav>
+      </header>
+      <Outlet />
+      <TanStackRouterDevtools />
+    </>
+  ),
+})
+```
+
+The `<TanStackRouterDevtools />` component is not required so you can remove it if you don't want it in your layout.
+
+More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
+
+
+## Data Fetching
+
+There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
+
+For example:
+
+```tsx
+const peopleRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/people",
+  loader: async () => {
+    const response = await fetch("https://swapi.dev/api/people");
+    return response.json() as Promise<{
+      results: {
+        name: string;
+      }[];
+    }>;
+  },
+  component: () => {
+    const data = peopleRoute.useLoaderData();
+    return (
+      <ul>
+        {data.results.map((person) => (
+          <li key={person.name}>{person.name}</li>
+        ))}
+      </ul>
+    );
+  },
+});
+```
+
+Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
+
+### React-Query
+
+React-Query is an excellent addition or alternative to route loading and integrating it into you application is a breeze.
+
+First add your dependencies:
 
 ```bash
-npm run dev info color.blue.500
+pnpm add @tanstack/react-query @tanstack/react-query-devtools
 ```
 
-#### List Tokens
+Next we'll need to create a query client and provider. We recommend putting those in `main.tsx`.
 
-```bash
-# List all tokens
-npm run dev list
+```tsx
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-# List only global tokens
-npm run dev list --global
+// ...
 
-# List only semantic tokens
-npm run dev list --semantic
+const queryClient = new QueryClient();
 
-# List only orphan tokens
-npm run dev list --orphan
+// ...
 
-# Filter by type
-npm run dev list --type color
-```
+if (!rootElement.innerHTML) {
+  const root = ReactDOM.createRoot(rootElement);
 
-### Available Options
-
-| Option | Description | Default |
-|--------|-------------|---------|
-| `-i, --input <path>` | Input directory or file containing tokens | `./tokens` |
-| `-o, --output <path>` | Output directory for reports | `./output` |
-| `-f, --format <formats...>` | Output formats (json, text, markdown, html, d3, dot, mermaid) | `json, html` |
-| `--no-viz` | Skip visualization generation | `false` |
-| `--console` | Print report to console | `false` |
-
-## Output Formats
-
-### Reports
-
-1. **JSON Report** (`report.json`): Comprehensive analysis including all tokens, statistics, and issues
-2. **Text Report** (`report.txt`): Human-readable plain text report
-3. **Markdown Report** (`report.md`): Formatted markdown report
-
-### Visualizations
-
-1. **Interactive HTML** (`visualization.html`): Interactive D3.js force-directed graph with zoom, pan, and tooltips
-2. **D3.js Data** (`d3-data.json`): JSON format compatible with D3.js
-3. **DOT Format** (`graph.dot`): For use with Graphviz (`dot -Tpng graph.dot -o graph.png`)
-4. **Mermaid** (`graph.mmd`): For use with Mermaid.js or GitHub
-
-## Understanding the Output
-
-### Token Types
-
-- **Global/Foundation Tokens**: Tokens with static values (e.g., `#2196f3`, `16px`)
-- **Semantic Tokens**: Tokens that reference other tokens (e.g., `{color.blue.500}`)
-- **Orphan Tokens**: Semantic tokens that reference non-existent tokens (errors)
-
-### Visualization Colors
-
-- 🟢 **Green**: Global/Foundation tokens
-- 🔵 **Blue**: Valid semantic tokens
-- 🔴 **Red**: Orphan tokens (invalid references)
-
-### Key Metrics
-
-- **Total Tokens**: Total number of tokens found
-- **Global Tokens**: Number of foundation tokens
-- **Semantic Tokens**: Number of tokens referencing other tokens
-- **Orphan Tokens**: Number of tokens with invalid references
-- **Average References**: Average number of references per token
-- **Max Depth**: Maximum depth of token reference chains
-- **Circular References**: Number of circular reference loops detected
-
-## Example Token Structure
-
-### Foundation Tokens (Global)
-
-```json
-{
-  "color": {
-    "blue": {
-      "500": {
-        "$type": "color",
-        "$value": "#2196f3"
-      }
-    }
-  }
+  root.render(
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }
 ```
 
-### Semantic Tokens
+You can also add TanStack Query Devtools to the root route (optional).
 
-```json
-{
-  "button": {
-    "primary": {
-      "background": {
-        "$type": "color",
-        "$value": "{color.blue.500}"
-      }
-    }
-  }
+```tsx
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+const rootRoute = createRootRoute({
+  component: () => (
+    <>
+      <Outlet />
+      <ReactQueryDevtools buttonPosition="top-right" />
+      <TanStackRouterDevtools />
+    </>
+  ),
+});
+```
+
+Now you can use `useQuery` to fetch your data.
+
+```tsx
+import { useQuery } from "@tanstack/react-query";
+
+import "./App.css";
+
+function App() {
+  const { data } = useQuery({
+    queryKey: ["people"],
+    queryFn: () =>
+      fetch("https://swapi.dev/api/people")
+        .then((res) => res.json())
+        .then((data) => data.results as { name: string }[]),
+    initialData: [],
+  });
+
+  return (
+    <div>
+      <ul>
+        {data.map((person) => (
+          <li key={person.name}>{person.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
 }
+
+export default App;
 ```
 
-### Orphan Token (Invalid)
+You can find out everything you need to know on how to use React-Query in the [React-Query documentation](https://tanstack.com/query/latest/docs/framework/react/overview).
 
-```json
-{
-  "button": {
-    "error": {
-      "background": {
-        "$type": "color",
-        "$value": "{color.purple.500}"
-      }
-    }
-  }
+## State Management
+
+Another common requirement for React applications is state management. There are many options for state management in React. TanStack Store provides a great starting point for your project.
+
+First you need to add TanStack Store as a dependency:
+
+```bash
+pnpm add @tanstack/store
+```
+
+Now let's create a simple counter in the `src/App.tsx` file as a demonstration.
+
+```tsx
+import { useStore } from "@tanstack/react-store";
+import { Store } from "@tanstack/store";
+import "./App.css";
+
+const countStore = new Store(0);
+
+function App() {
+  const count = useStore(countStore);
+  return (
+    <div>
+      <button onClick={() => countStore.setState((n) => n + 1)}>
+        Increment - {count}
+      </button>
+    </div>
+  );
 }
+
+export default App;
 ```
 
-## Project Structure
+One of the many nice features of TanStack Store is the ability to derive state from other state. That derived state will update when the base state updates.
 
-```
-design-tokens-explorer/
-├── src/
-│   ├── types.ts          # Type definitions
-│   ├── parser.ts         # Token parser
-│   ├── analyzer.ts       # Token analyzer
-│   ├── graph.ts          # Graph builder
-│   ├── visualizer.ts     # Visualization generators
-│   ├── reporter.ts       # Report generators
-│   ├── cli.ts            # CLI interface
-│   └── index.ts          # Main exports
-├── examples/
-│   └── tokens/
-│       ├── foundation/   # Global tokens
-│       └── semantic/     # Semantic tokens
-├── output/               # Generated reports and visualizations
-├── package.json
-├── tsconfig.json
-└── README.md
-```
+Let's check this out by doubling the count using derived state.
 
-## API Usage
+```tsx
+import { useStore } from "@tanstack/react-store";
+import { Store, Derived } from "@tanstack/store";
+import "./App.css";
 
-You can also use the tool programmatically:
+const countStore = new Store(0);
 
-```typescript
-import { DesignTokensExplorer } from './src';
+const doubledStore = new Derived({
+  fn: () => countStore.state * 2,
+  deps: [countStore],
+});
+doubledStore.mount();
 
-const explorer = new DesignTokensExplorer();
+function App() {
+  const count = useStore(countStore);
+  const doubledCount = useStore(doubledStore);
 
-// Analyze tokens
-const { tokenMap, report, graph } = await explorer.analyzeDirectory('./tokens');
+  return (
+    <div>
+      <button onClick={() => countStore.setState((n) => n + 1)}>
+        Increment - {count}
+      </button>
+      <div>Doubled - {doubledCount}</div>
+    </div>
+  );
+}
 
-// Get visualizer and reporter
-const visualizer = explorer.getVisualizer();
-const reporter = explorer.getReporter();
-
-// Generate outputs
-const html = visualizer.toInteractiveHTML(graph);
-const d3Data = visualizer.toD3Format(graph);
-const dotData = visualizer.toDotFormat(graph);
-const mermaidData = visualizer.toMermaidFormat(graph);
-
-// Generate reports
-await reporter.generateJSONReport(report, graph, tokenMap, './output/report.json');
-await reporter.generateTextReport(report, graph, './output/report.txt');
-await reporter.generateMarkdownReport(report, graph, './output/report.md');
+export default App;
 ```
 
-## Common Issues
+We use the `Derived` class to create a new store that is derived from another store. The `Derived` class has a `mount` method that will start the derived store updating.
 
-### Orphan Tokens
+Once we've created the derived store we can use it in the `App` component just like we would any other store using the `useStore` hook.
 
-If you see orphan tokens in the report, it means some semantic tokens reference tokens that don't exist. Common causes:
+You can find out everything you need to know on how to use TanStack Store in the [TanStack Store documentation](https://tanstack.com/store/latest).
 
-1. Typos in token references (e.g., `{spacng.md}` instead of `{spacing.md}`)
-2. Missing foundation tokens
-3. Incorrect token paths
+# Demo files
 
-### Circular References
+Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
 
-Circular references occur when tokens reference each other in a loop:
+# Learn More
 
-```
-token.a -> token.b -> token.c -> token.a
-```
-
-This should be avoided in design token systems.
-
-## License
-
-MIT
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
