@@ -46,7 +46,11 @@ export function processFigmaVariables(
  * @param color - Color string in HEX (#fff, #ffffff) or RGB (rgb(255, 0, 0)) format
  * @returns Object with red, green, blue values (0-255)
  */
-function parseColorToRGB(color: string): { red: number; green: number; blue: number } {
+function parseColorToRGB(color: string): {
+  red: number
+  green: number
+  blue: number
+} {
   // HEX format: #ffffff or #fff
   if (color.startsWith('#')) {
     const hex = color.slice(1)
@@ -75,7 +79,9 @@ function parseColorToRGB(color: string): { red: number; green: number; blue: num
   // RGB/RGBA format: rgb(255, 0, 0) or rgba(255, 0, 0, 0.5)
   const rgbMatch = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
   if (!rgbMatch) {
-    throw new Error(`Invalid color format: ${color}. Expected HEX (#fff or #ffffff) or RGB (rgb(r, g, b))`)
+    throw new Error(
+      `Invalid color format: ${color}. Expected HEX (#fff or #ffffff) or RGB (rgb(r, g, b))`,
+    )
   }
 
   return {
@@ -192,4 +198,55 @@ function extractDescription(name: string): string | undefined {
     .replace(/\b\w/g, (l) => l.toUpperCase())
 
   return readable !== name ? readable : undefined
+}
+
+/**
+ * Gets a token name for radius variables
+ */
+export function getRadiusTokenName(name: string): string {
+  return `${name
+    .split('/')
+    .map((str) => str.toLowerCase())
+    .join('-')}`
+}
+
+/**
+ * Radius token interface
+ */
+export interface RadiusToken {
+  name: string
+  valueInPx: number
+  valueInRem: string
+  description?: string
+}
+
+/**
+ * Converts Figma radius variable definitions to RadiusToken format
+ * @param figmaVariables - Object with variable names as keys and radius values as strings
+ * @returns Array of RadiusToken objects
+ */
+export function processFigmaRadiusVariables(
+  figmaVariables: Record<string, string>,
+): RadiusToken[] {
+  return Object.entries(figmaVariables)
+    .filter(([name, value]) => {
+      // Filter for radius variables (numeric values)
+      return (
+        name.toLowerCase().includes('radius') &&
+        typeof value === 'string' &&
+        !isNaN(Number(value))
+      )
+    })
+    .map(([name, value]) => {
+      const numericValue = Number(value)
+
+      return {
+        name: getRadiusTokenName(name),
+        value: `${numericValue}px`,
+        valueInPx: numericValue,
+        valueInRem: `${numericValue / 16}rem`,
+        description: extractDescription(name),
+      }
+    })
+    .sort((a, b) => a.valueInPx - b.valueInPx)
 }
