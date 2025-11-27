@@ -1,4 +1,4 @@
-import type { RadiusToken } from '@/lib/figma-variables'
+import type { RadiusToken } from '@/lib/figma'
 
 export interface RadiusProps {
   radiuses: RadiusToken[]

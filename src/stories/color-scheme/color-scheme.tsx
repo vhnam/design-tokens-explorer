@@ -1,10 +1,4 @@
-export interface ColorToken {
-  name: string
-  hexValue: string
-  oklchValue: string
-  rgbValue: string
-  description?: string
-}
+import { ColorToken } from '@/lib/figma'
 
 export interface ColorSchemeProps {
   colors: ColorToken[]

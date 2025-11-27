@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { ColorScheme } from './color-scheme'
-import { processFigmaVariables } from '@/lib/figma-variables'
+import { processFigmaVariables } from '@/lib/figma'
 import {
   darkColorScheme,
   grayColorScheme,

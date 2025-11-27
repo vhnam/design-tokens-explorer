@@ -1,4 +1,4 @@
-import type { ShadowToken } from '@/lib/figma-variables'
+import type { ShadowToken } from '@/lib/figma'
 
 export interface ShadowProps {
   shadows: Array<ShadowToken>
@@ -48,4 +48,3 @@ export const Shadow = ({ shadows, title = 'Shadow' }: ShadowProps) => {
     </div>
   )
 }
-

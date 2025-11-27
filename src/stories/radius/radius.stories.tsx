@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Radius } from './radius'
-import { processFigmaRadiusVariables } from '@/lib/figma-variables'
+import { processFigmaRadiusVariables } from '@/lib/figma'
 import { radiusVariables } from '@/data/figma-radius'
 
 const meta = {

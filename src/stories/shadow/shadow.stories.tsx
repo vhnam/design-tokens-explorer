@@ -1,6 +1,6 @@
 import { Shadow } from './shadow'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { processFigmaShadowVariables } from '@/lib/figma-variables'
+import { processFigmaShadowVariables } from '@/lib/figma'
 import { shadowVariables } from '@/data/figma-shadow'
 
 const meta = {
