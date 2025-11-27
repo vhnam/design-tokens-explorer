@@ -1,14 +1,11 @@
-import { ColorToken } from '@/lib/figma'
+import type { ColorToken } from '@/lib/figma'
 
-export interface ColorSchemeProps {
+export interface ColorProps {
   colors: ColorToken[]
   title?: string
 }
 
-export const ColorScheme = ({
-  colors,
-  title = 'Color Scheme',
-}: ColorSchemeProps) => {
+export const Color = ({ colors, title = 'Color Scheme' }: ColorProps) => {
   return (
     <div className="p-8">
       <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">
