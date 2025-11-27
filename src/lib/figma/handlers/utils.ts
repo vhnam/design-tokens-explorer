@@ -55,3 +55,13 @@ export function getBreakpointTokenName(name: string): string {
     .join('-')}`
 }
 
+/**
+ * Gets a token name for typography variables
+ */
+export function getTypographyTokenName(name: string): string {
+  return `${name
+    .split('/')
+    .map((str) => str.toLowerCase())
+    .join('-')}`
+}
+
