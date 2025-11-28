@@ -17,6 +17,7 @@ function parseColorToRGB(color: string): {
   red: number
   green: number
   blue: number
+  alpha?: number
 } {
   // HEX format: #ffffff or #fff
   if (color.startsWith('#')) {
@@ -44,7 +45,9 @@ function parseColorToRGB(color: string): {
   }
 
   // RGB/RGBA format: rgb(255, 0, 0) or rgba(255, 0, 0, 0.5)
-  const rgbMatch = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
+  const rgbMatch = color.match(
+    /rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)/,
+  )
   if (!rgbMatch) {
     throw new Error(
       `Invalid color format: ${color}. Expected HEX (#fff or #ffffff) or RGB (rgb(r, g, b))`,
@@ -55,6 +58,7 @@ function parseColorToRGB(color: string): {
     red: parseInt(rgbMatch[1], 10),
     green: parseInt(rgbMatch[2], 10),
     blue: parseInt(rgbMatch[3], 10),
+    alpha: rgbMatch[4] ? parseFloat(rgbMatch[4]!) : undefined,
   }
 }
 
@@ -102,6 +106,14 @@ function linearize(val: number): number {
 
 /**
  * Formats OKLCH values with specified decimal precision
+ * @param l - Lightness value (0-1)
+ * @param c - Chroma value
+ * @param h - Hue value (0-360)
+ * @param lDigits - Number of decimal places for lightness (default: 3)
+ * @param cDigits - Number of decimal places for chroma (default: 3)
+ * @param hDigits - Number of decimal places for hue (default: 1)
+ * @param alpha - Optional alpha value (0-1). If provided, formats as oklch(l c h / alpha)
+ * @param alphaDigits - Number of decimal places for alpha (default: 3)
  */
 export function shortenOklch(
   l: number,
@@ -110,8 +122,13 @@ export function shortenOklch(
   lDigits = 3,
   cDigits = 3,
   hDigits = 1,
+  alpha?: number,
 ): string {
-  return `oklch(${l.toFixed(lDigits)} ${c.toFixed(cDigits)} ${h.toFixed(hDigits)})`
+  const base = `oklch(${l.toFixed(lDigits)} ${c.toFixed(cDigits)} ${h.toFixed(hDigits)}`
+  if (alpha !== undefined) {
+    return `${base} / ${alpha})`
+  }
+  return `${base})`
 }
 
 /**
@@ -124,7 +141,7 @@ export function convertToOKLCH(color: string): string {
     return color
   }
 
-  const { red, green, blue } = parseColorToRGB(color)
+  const { red, green, blue, alpha } = parseColorToRGB(color)
 
   // Convert 0–255 → 0–1 and linearize
   const srgb = [red, green, blue].map((v) => v / 255).map(linearize)
@@ -151,7 +168,7 @@ export function convertToOKLCH(color: string): string {
   let H = Math.atan2(b_, a) * (180 / Math.PI)
   if (H < 0) H += 360
 
-  return shortenOklch(L, C, H)
+  return shortenOklch(L, C, H, 3, 3, 1, alpha)
 }
 
 /**
@@ -174,7 +191,7 @@ export function processFigmaVariables(
     })
     .map(([name, value]) => {
       const hexValue = convertToHex(value)
-      const oklchValue = convertToOKLCH(hexValue)
+      const oklchValue = convertToOKLCH(value)
       const rgbValue = convertToRGB(value)
 
       return {

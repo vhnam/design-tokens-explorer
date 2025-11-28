@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Color } from './color'
+import { PrimitiveColor } from './primitive-color'
 import { processFigmaVariables } from '@/lib/figma'
 import {
   darkColorScheme,
@@ -17,16 +17,16 @@ import {
   yellowColorScheme,
   orangeColorScheme,
   blackAndWhiteColorScheme,
-} from '@/data/figma-colors'
+} from '@/data/figma-primitive-colors'
 
 const meta = {
-  title: 'Design Tokens/Colors/Foundations',
-  component: Color,
+  title: 'Design Tokens/Colors/Primitives',
+  component: PrimitiveColor,
   parameters: {
     layout: 'fullscreen',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof Color>
+} satisfies Meta<typeof PrimitiveColor>
 
 export default meta
 type Story = StoryObj<typeof meta>
